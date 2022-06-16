@@ -78,8 +78,8 @@ void forward_network_gpu(network net, network_state state)
     state.workspace = net.workspace;
     int i;
 
-    cudaProfilerStart();
     for(i = 0; i < net.n; ++i){
+        cudaProfilerStart();
         state.index = i;
         layer l = net.layers[i];
         if(l.delta_gpu && state.train){
@@ -149,8 +149,8 @@ void forward_network_gpu(network net, network_state state)
             cvDestroyAllWindows();
         }
 */
+        cudaProfilerStop();
     }
-    cudaProfilerStop();
     fclose(res);
 
     // if (net.benchmark_layers) {
