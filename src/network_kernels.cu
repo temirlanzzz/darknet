@@ -77,9 +77,8 @@ void forward_network_gpu(network net, network_state state)
 
     state.workspace = net.workspace;
     int i;
-
-    for(i = 0; i < net.n; ++i){
-        cudaProfilerStart();
+    //cudaProfilerStart();
+    for(i = 0; i < net.n; ++i){  
         state.index = i;
         layer l = net.layers[i];
         if(l.delta_gpu && state.train){
@@ -90,13 +89,13 @@ void forward_network_gpu(network net, network_state state)
             start_time = get_time_point();
         }
 
-        int conv_layer_id = 36;
+        int conv_layer_id = 0;
 
 
-        if(l.type == CONVOLUTIONAL and i == conv_layer_id){
-            // cudaProfilerStart();
+        if(i == conv_layer_id){ // l.type == CONVOLUTIONAL and 
+            cudaProfilerStart();
             l.forward_gpu(l, state);
-            // cudaProfilerStop();
+            cudaProfilerStop();
         }else{
             l.forward_gpu(l, state);
         }
@@ -149,10 +148,10 @@ void forward_network_gpu(network net, network_state state)
             cvDestroyAllWindows();
         }
 */
-        cudaProfilerStop();
+        
     }
     fclose(res);
-
+    //cudaProfilerStop();
     // if (net.benchmark_layers) {
     //     printf("\n\nSorted by time (forward):\n");
     //     qsort(sorted_avg_time_per_layer, net.n, sizeof(time_benchmark_layers), time_comparator);
