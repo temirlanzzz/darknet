@@ -11,7 +11,7 @@
 #include "utils.h"
 #include "dark_cuda.h"
 #include "box.h"
-
+#include "cuda_profiler_api.h"
 
 __global__ void binarize_kernel(float *x, int n, float *binary)
 {
