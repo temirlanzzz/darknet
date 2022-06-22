@@ -465,8 +465,9 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
 
         assert(input16_size > 0);
         cuda_convert_f32_to_f16(state.input, input16_size, input16);
-
         //fill_ongpu(output16_size / 2, 0, (float *)output16, 1);
+        
+        cudaProfilerStart();
         CHECK_CUDNN(cudnnConvolutionForward(cudnn_handle(),
             &alpha,
             l.srcTensorDesc16,
@@ -480,7 +481,7 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
             &beta,
             l.dstTensorDesc16,
             output16));
-
+        cudaProfilerStop();
 
         if (l.batch_normalize)
         {
