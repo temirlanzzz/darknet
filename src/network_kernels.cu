@@ -93,9 +93,9 @@ void forward_network_gpu(network net, network_state state)
 
 
         if(i == conv_layer_id){ // l.type == CONVOLUTIONAL and 
-            cudaProfilerStart();
+           // cudaProfilerStart();
             l.forward_gpu(l, state);
-            cudaProfilerStop();
+            //cudaProfilerStop();
         }else{
             l.forward_gpu(l, state);
         }
